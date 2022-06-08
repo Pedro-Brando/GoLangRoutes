@@ -1,0 +1,44 @@
+{{template "base" .}}
+{{define "title"}} Home {{end}}
+{{define "body"}}
+  <h2>Roll for initiative:</h2>
+
+  <form action="/salvar" method="post">
+    <input class="inputentrar" type="text" name="title" placeholder="Tarefa">
+    <br><br>
+    <textarea class="inputentrar" name="content" placeholder="Descrição" style="white-space: pre-wrap"></textarea>
+    <br><br>
+    <input type="submit" class="button" name="submit" value="Criar">
+  </form>
+  <br><br>
+  <h2>Tasks::</h2>
+  {{if .}}
+    {{range .}}
+      <table >
+        <tr>
+          <th>
+            <h3 class="tarefa">{{.Title}}</h3>
+            <form action="/excluir" method="post">
+              <button type="submit" name="excluir" value="{{.ID}}" class="excluir">
+                <img class="excluir" src="/static/img/lixeira.png" alt="">
+              </button>
+            </form>
+            <form action="/editar?id={{.ID}}" method="post">
+              <button type="submit" name="editar" class="editar">
+                <img class="editar" src="/static/img/editar.png" alt="">
+              </button>
+            </form>
+          </th>
+        </tr>
+        <tr>
+          <td>
+            {{.Content}}
+          </td>
+        </tr>
+      </table>
+      <br>
+    {{end}}
+  {{else}}
+    <p>Nada disponível atualmente</p>
+  {{end}}
+{{end}}
